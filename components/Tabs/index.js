@@ -40,6 +40,7 @@ axios.get('https://lambda-times-backend.herokuapp.com/topics')
       const tabs = Tab(item) //item is a topic
       topics.appendChild(tabs)
     })
+    console.log(response);
   })
 
 
