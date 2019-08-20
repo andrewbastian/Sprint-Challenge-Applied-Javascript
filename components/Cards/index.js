@@ -24,37 +24,22 @@ const cardContainer = document.querySelector(".cards-container")
 
 axios.get('https://lambda-times-backend.herokuapp.com/articles')
 .then((response) =>{
-
-  const headline = response.data.headline
-    const authorPhoto = response.data.authorPhoto
-    const authorName = response.data.authorName
-    let newComponents = []
-axios.get('https://lambda-times-backend.herokuapp.com/articles')
-    newComponents.map((headline, authorPhoto, authorName) => {
-      let newCard = Card(headline, authorPhoto, authorName);
-
-      // Remember, we always need to return something when we use .map
-      return newCard;
-    });
-    const cards = Card(headline, authorPhoto, authorName)
-    newComponents.forEach(cards => {
-      cardContainer.appendChild(cards);
-    });
-
-    cardContainer.appendChild(cards)
-         console.log(cardContainer);
-
-        })
-
-
-
+// console.log(response.data.articles);
+const array = Object.entries(response.data.articles)
+// console.log(array)
+array.forEach(topic =>{
+  console.log("topic: ",topic);
+   topic[1].forEach(obj=>{
+     Card(obj.headline,obj.authorPhoto, obj.authorName)
+   })
+})
+;})
   .catch((error) => {
     console.log('Network request was fail')
     console.log(error)
   })
 
 // <div class="card">
-
 function Card(headline, authorPhoto, authorName) {
   const card = document.createElement('div')
   card.classList.add('card')
@@ -68,12 +53,12 @@ function Card(headline, authorPhoto, authorName) {
   //   <div class="author">
   const author = document.createElement('div')
   author.classList.add('author')
-  author.appendChild(card)
+  card.appendChild(author)
 
   //     <div class="img-container">
   const imgContainer = document.createElement('div')
   imgContainer.classList.add('img-container')
-  imgContainer.appendChild(author)
+  author.appendChild(imgContainer)
 
   //       <img src={url of authors image} />
   const image = document.createElement('img')
@@ -89,7 +74,6 @@ function Card(headline, authorPhoto, authorName) {
   //</div>
   //</div>
 
-
-  return card
+cardContainer.appendChild(card)
 }
 //
